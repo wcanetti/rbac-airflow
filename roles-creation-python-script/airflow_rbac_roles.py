@@ -54,8 +54,8 @@ def create_rbac_role_with_permissions(
         read_permissions = make_permissions(read, [dag])
         edit_permissions = make_permissions(edit, [dag])
         delete_permissions = make_permissions(delete, [dag])
-        create_permissions = make_permissions(create, [dag])
-        menu_permissions = make_permissions(menu, [dag])
+#        create_permissions = make_permissions(create, [dag])
+#        menu_permissions = make_permissions(menu, [dag])
 
     if "read" in privileges:
         permissions += read_permissions
@@ -63,10 +63,10 @@ def create_rbac_role_with_permissions(
         permissions += edit_permissions
     if "delete" in privileges:
         permissions += delete_permissions
-    if "create" in privileges:
-        permissions += create_permissions
-    if "menu" in privileges:
-        permissions += menu_permissions
+#    if "create" in privileges:
+#        permissions += create_permissions
+#    if "menu" in privileges:
+#        permissions += menu_permissions
 
     data = {
         "actions": [
