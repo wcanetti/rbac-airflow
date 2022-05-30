@@ -6,10 +6,7 @@ from datetime import datetime, timedelta
 with DAG(dag_id='DAG-B', 
         schedule_interval=None, 
         start_date=datetime(2022, 5, 23),
-        catchup=False,
-        access_control={
-            'Consumer1-GroupA-Execute': {'can_dag_read', 'can_dag_edit'}
-        }
+        catchup=False
 ) as dag:
 
     # Task 1

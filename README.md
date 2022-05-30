@@ -38,16 +38,25 @@ We will be creating two <u>roles</u>:
 After having created the two DAGS and ROLES, we will be assigning these ROLES to different users to see the security restrictions applied at the DAG level in action.
 
 ## DAGS import to Cloud Composer
-- In the following [folder](https://github.com/wcanetti/rbac-airflow/tree/main/DAGs) you cam find the 2 DAGS we will be using. In order to upload them to the Cloud Composer DAGS folder, please execute the following command:
+- In the following [folder](https://github.com/wcanetti/rbac-airflow/tree/main/DAGs) you cam find the 2 DAGS we will be using. Open the Cloud Shell and clone the GitHub repo by executing the following command:
 
 ```bash
-gcloud composer environments storage dags import \
-    --environment ENVIRONMENT_NAME \
-    --location ${LOCATION} \
-    --source="LOCAL_FILE_TO_UPLOAD"
+https://github.com/wcanetti/rbac-airflow.git
 ```
 
-Python Script y explicación de los parámetros de entrada
+In order to upload them to the Cloud Composer DAGS folder, please execute the following command. Please first replace the <u>composer-environment-name</u> tag with the Cloud Composer instance name.
+
+```bash
+export ENVIRONMENT_NAME=<composer-environment-name>
+gcloud composer environments storage dags import \
+    --environment ${ENVIRONMENT_NAME} \
+    --location ${LOCATION} \
+    --source="/home/${USER}/rbac-airflow/DAGs"
+```
+
+## Python script
+
+The Python script in this [folder](https://) 
 
 Ejecución de Python Script
 - Acceso a cloud shell
