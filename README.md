@@ -54,8 +54,6 @@ gcloud composer environments storage dags import \
     --source="/home/${USER}/rbac-airflow/DAGs"
 ```
 
-## Python script for RBAC roles creation
-
 The Python script in this [folder](https://github.com/wcanetti/rbac-airflow/tree/main/Roles%20Creation%20Python%20Script) will allow an administrator to create or update airflow RBAC roles in order to add / restrict permissions to a Cloud Composer (Airflow) user.
 
 As part of the parameters this Python script receives, you need too specify:
