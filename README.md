@@ -56,7 +56,7 @@ gcloud composer environments storage dags import \
 
 ## Python script
 
-The Python script in this [folder](https://) 
+The Python script in this [folder](https://github.com/wcanetti/rbac-airflow/tree/main/Roles%20Creation%20Python%20Script)) 
 
 Ejecución de Python Script
 - Acceso a cloud shell
