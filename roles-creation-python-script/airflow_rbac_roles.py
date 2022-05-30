@@ -52,9 +52,9 @@ def create_rbac_role_with_permissions(
     print(dag_names)
     for dag in dag_names:
         dag = "DAG:" + dag
-        read_permissions = make_permissions(read, [dag])
-        edit_permissions = make_permissions(edit, [dag])
-        delete_permissions = make_permissions(delete, [dag])
+        read_permissions += make_permissions(read, [dag])
+        edit_permissions += make_permissions(edit, [dag])
+        delete_permissions += make_permissions(delete, [dag])
 #        create_permissions = make_permissions(create, [dag])
 #        menu_permissions = make_permissions(menu, [dag])
 
