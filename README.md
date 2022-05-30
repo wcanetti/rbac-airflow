@@ -38,7 +38,7 @@ We will be creating two <u>roles</u>:
 After having created the two DAGS and ROLES, we will be assigning these ROLES to different users to see the security restrictions applied at the DAG level in action.
 
 ## DAGS import to Cloud Composer
-- In the following [folder](https://url) you cam find the 2 DAGS we will be using. In order to upload them to the Cloud Composer DAGS folder, please execute the following command:
+- In the following [folder](https://github.com/wcanetti/rbac-airflow/tree/main/DAGs) you cam find the 2 DAGS we will be using. In order to upload them to the Cloud Composer DAGS folder, please execute the following command:
 
 ```bash
 gcloud composer environments storage dags import \
