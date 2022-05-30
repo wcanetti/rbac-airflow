@@ -1,0 +1,34 @@
+ROLE A ==> DAG 1 and DAG 2 ==> EXECUTE
+ROLE B ==> DAG 1 ==> VIEW
+
+gcloud composer environments run rbac-airflow \
+--location us-central1 \
+users add-role -- -e wcanettiacademy5@gmail.com -r Admin
+
+gcloud composer environments run rbac-airflow \
+--location us-central1 \
+users remove-role -- -e wcanettiacademy5@gmail.com -r Admin
+
+gcloud composer environments run rbac-airflow \
+--location us-central1 \
+users remove-role -- -e wcanettiacademy5@gmail.com -r Op
+
+gcloud composer environments run rbac-airflow \
+--location us-central1 \
+users add-role -- -e wcanettiacademy5@gmail.com -r Consumer1-GroupA-Execute
+
+gcloud composer environments run rbac-airflow \
+--location us-central1 \
+users remove-role -- -e wcanettiacademy5@gmail.com -r Consumer1-GroupA-Execute
+
+gcloud composer environments run rbac-airflow \
+--location us-central1 \
+users add-role -- -e wcanettiacademy5@gmail.com -r Consumer2-GroupA-Read
+
+gcloud composer environments run rbac-airflow \
+--location us-central1 \
+users remove-role -- -e wcanettiacademy5@gmail.com -r Consumer2-GroupA-Read
+
+revisar IAM permission
+revisar adding permissions to roles programatically
+
