@@ -38,7 +38,7 @@ We will be creating two <u>roles</u>:
 After having created the two DAGS and ROLES, we will be assigning these ROLES to different users to see the security restrictions applied at the DAG level in action.
 
 ## DAGS import to Cloud Composer
-- In the following [folder](https://github.com/wcanetti/rbac-airflow/tree/main/DAGs) you cam find the 2 DAGS we will be using. Open the Cloud Shell and clone the GitHub repo by executing the following command:
+- In the following [folder](https://github.com/wcanetti/rbac-airflow/tree/main/dags) you cam find the 2 DAGS we will be using. Open the Cloud Shell and clone the GitHub repo by executing the following command:
 
 ```bash
 https://github.com/wcanetti/rbac-airflow.git
@@ -54,7 +54,7 @@ gcloud composer environments storage dags import \
     --source="/home/${USER}/rbac-airflow/DAGs"
 ```
 
-The Python script in this [folder](https://github.com/wcanetti/rbac-airflow/tree/main/Roles%20Creation%20Python%20Script) will allow an administrator to create or update airflow RBAC roles in order to add / restrict permissions to a Cloud Composer (Airflow) user.
+The Python script in this [folder](https://github.com/wcanetti/rbac-airflow/tree/main/roles-creation-python-script) will allow an administrator to create or update airflow RBAC roles in order to add / restrict permissions to a Cloud Composer (Airflow) user.
 
 As part of the parameters this Python script receives, you need too specify:
 - Airflow URL (--airflow-url): the Cloud Composer (Airflow) URL.
