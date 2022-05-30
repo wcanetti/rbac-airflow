@@ -49,6 +49,7 @@ def create_rbac_role_with_permissions(
         permissions += menu_permissions
 
     # add dag-specific permissions
+    print(dag_names)
     for dag in dag_names:
         dag = "DAG:" + dag
         read_permissions = make_permissions(read, [dag])
