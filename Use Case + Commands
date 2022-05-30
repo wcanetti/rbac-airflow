@@ -1,9 +1,9 @@
 ROLE A ==> DAG 1 and DAG 2 ==> EXECUTE
 ROLE B ==> DAG 1 ==> VIEW
 
-gcloud composer environments run rbac-airflow \
+gcloud composer environments run env-1 \
 --location us-central1 \
-users add-role -- -e wcanettiacademy5@gmail.com -r Admin
+users add-role -- -e omar.avelar.f@gmail.com -r READ
 
 gcloud composer environments run rbac-airflow \
 --location us-central1 \

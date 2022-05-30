@@ -15,6 +15,7 @@ In case you have a Composer instance already created, skip this step, if not, in
 ```bash
 
 export LOCATION=us-central1
+export PROJECT=<project id>
 export IMAGE_VERSION=composer-2.0.14-airflow-2.2.3
 export ENVIRONMENT_SIZE=small
 
@@ -63,13 +64,37 @@ As part of the parameters this Python script receives, you need too specify:
 - DAGS (--dags): list of comma separated values with the name of the DAGS you want to apply the specified permissions.
 - Priviligies (--privilegies): specify "read" for read permissions, specify "edit" for edit permissions, specify "delete" for delete permissions, specify "create" for create and specify "menu" for menu permissions.
 
-<u>Note</u>: each GCP user is created in Cloud Composer with the Op Airflow role by default, which in terms of DAGS, gives you the ability to view, create and delete. In order to prevent this role assignment by default, as part of your IAC code you can include initialization scripts to override this behavior.
+<u>Note</u>: each GCP user is created in Cloud Composer with the "Op" Airflow role by default, which in terms of DAGS, gives you the ability to view, create and delete. In order to prevent this role assignment by default, as part of your IAC code you can include initialization scripts to override this behavior. Run the following command to remove the "Op" Airflow role to a user. Do not forget to update the \<project id\> and the \<user\> tag.
+
+```bash
+gcloud composer environments run ${ENVIRONMENT_NAME} --location ${LOCATION} --project ${PROJECT} users remove-role -- -e <user> -r Op
+````
 
 ## RBAC Python script execution
 
+By executing the command below we will be creating a role called "READ" which will only have Airflow read related permissions associated.
 
+```bash
+airflow_url=$(echo $(gcloud composer environments describe ${ENVIRONMENT} --location ${LOCATION} --project ${PROJECT} | grep airflowUri | awk '{ print $2}'))
+role_name="Consumers-Group-A"
+dag_list=DAG-A
+token=$(echo $(gcloud auth print-access-token))
+privileges="read"
 
+python3 /home/${USER}/rbac-airflow/roles-creation-python-script/airflow_rbac_roles.py -u $airflow_url -r $role_name -t $token -d $dag_list -p $privileges
+```
 
+By executing the command below we will be creating a role called "READ_EDIT_CREATE_DELETE_MENU" which will only have Airflow read related permissions associated.
+
+```bash
+airflow_url=$(echo $(gcloud composer environments describe ${ENVIRONMENT} --location ${LOCATION} --project ${PROJECT} | grep airflowUri | awk '{ print $2}'))
+role_name="Consumers-Group-B"
+dag_list=DAG-B
+token=$(echo $(gcloud auth print-access-token))
+privileges="read edit create delete menu"
+
+python3 /home/${USER}/rbac-airflow/roles-creation-python-script/airflow_rbac_roles.py -u $airflow_url -r $role_name -t $token -d $dag_list -p $privileges
+```
 
 GCLOUD Commands para asociación de Rol a Usuario
 
