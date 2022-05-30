@@ -70,39 +70,69 @@ As part of the parameters this Python script receives, you need too specify:
 gcloud composer environments run ${ENVIRONMENT_NAME} --location ${LOCATION} --project ${PROJECT} users remove-role -- -e <user> -r Op
 ````
 
-## RBAC Python script execution
+## RBAC role creation and user binding
 
-By executing the command below we will be creating a role called "READ" which will only have Airflow read related permissions associated.
+By executing the command below we will be creating a role called <b>Consumers-Group-A</b> which will provide users having it with <b><u>read</u></b> permissions on the DAGs specified in the DAG list. In this case, DAG-A.
 
 ```bash
 airflow_url=$(echo $(gcloud composer environments describe ${ENVIRONMENT} --location ${LOCATION} --project ${PROJECT} | grep airflowUri | awk '{ print $2}'))
 role_name="Consumers-Group-A"
-dag_list=DAG-A
+dag_list="DAG-A"
 token=$(echo $(gcloud auth print-access-token))
 privileges="read"
 
 python3 /home/${USER}/rbac-airflow/roles-creation-python-script/airflow_rbac_roles.py -u $airflow_url -r $role_name -t $token -d $dag_list -p $privileges
 ```
 
-By executing the command below we will be creating a role called "READ_EDIT_CREATE_DELETE_MENU" which will only have Airflow read related permissions associated.
+Now, let's assign it to the user. Replace the \<user\> tag with the username you want to bind this role to.
+
+```bash
+gcloud composer environments run ${ENVIRONMENT} --location ${LOCATION} --project ${PROJECT} users add-role -- -e <user> -r Consumers-Group-A
+```
+
+By executing the command below we will be creating a role called <b>Consumers-Group-B</b> which will provide users having it with <b><u>read and execute</u></b> permissions on the DAGs specified in the DAG list. In this case, DAG-B.
 
 ```bash
 airflow_url=$(echo $(gcloud composer environments describe ${ENVIRONMENT} --location ${LOCATION} --project ${PROJECT} | grep airflowUri | awk '{ print $2}'))
 role_name="Consumers-Group-B"
-dag_list=DAG-B
+dag_list="DAG-B"
 token=$(echo $(gcloud auth print-access-token))
 privileges="read edit create delete menu"
 
 python3 /home/${USER}/rbac-airflow/roles-creation-python-script/airflow_rbac_roles.py -u $airflow_url -r $role_name -t $token -d $dag_list -p $privileges
 ```
 
-GCLOUD Commands para asociación de Rol a Usuario
+Now, let's assign it to the user. Replace the \<user\> tag with the username you want to bind this role to.
 
-Demonstration
-- Enter your cloud composer logged in as User A and you will be able to only view DAG A.
-    - Imagen
-- Enter your cloud composer logged in as User B and you will be able to only view DAG B and you will be able to execute it
-    - Imagen
+```bash
+gcloud composer environments run ${ENVIRONMENT} --location ${LOCATION} --project ${PROJECT} users add-role -- -e <user> -r Consumers-Group-A
+```
 
-Anexo (Nice-To-Have)
-- Initialization script para remoción default del permiso Op
+The result in Cloud Composer should be the one depicted below, having DAG-A greyed out (only able to read/view):
+
+![Scenario 1](https://github.com/wcanetti/rbac-airflow/blob/main/images/dag-a.png)
+
+Now, we will be updating the <b>Consumers-Group-B</b> by running the command again with the changes specified below. We will now specify DAG-A in the DAG list, and we will only provide <b><u>read</u></b> permissions for this specific DAG.
+
+```bash
+airflow_url=$(echo $(gcloud composer environments describe ${ENVIRONMENT} --location ${LOCATION} --project ${PROJECT} | grep airflowUri | awk '{ print $2}'))
+role_name="Consumers-Group-B"
+dag_list="DAG-A"
+token=$(echo $(gcloud auth print-access-token))
+privileges="read"
+
+python3 /home/${USER}/rbac-airflow/roles-creation-python-script/airflow_rbac_roles.py -u $airflow_url -r $role_name -t $token -d $dag_list -p $privileges
+```
+
+The result in Cloud Composer should be the one depicted below, having DAG-B enabled, being able to read and execute:
+
+![Scenario 2](https://github.com/wcanetti/rbac-airflow/blob/main/images/dag-b.png)
+
+Now, let's assign it to the user. Replace the \<user\> tag with the username you want to bind this role to.
+
+```bash
+gcloud composer environments run ${ENVIRONMENT} --location ${LOCATION} --project ${PROJECT} users add-role -- -e <user> -r Consumers-Group-A
+```
+The result in Cloud Composer should be the one depicted below, having DAG-A greyed out (only able to read/view), and having DAG-B enabled, being able to read and execute:
+
+![Scenario 3](https://github.com/wcanetti/rbac-airflow/blob/main/images/dag-a-b.png)
