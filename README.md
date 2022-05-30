@@ -54,14 +54,24 @@ gcloud composer environments storage dags import \
     --source="/home/${USER}/rbac-airflow/DAGs"
 ```
 
-## Python script
+## Python script for RBAC roles creation
 
-The Python script in this [folder](https://github.com/wcanetti/rbac-airflow/tree/main/Roles%20Creation%20Python%20Script)) 
+The Python script in this [folder](https://github.com/wcanetti/rbac-airflow/tree/main/Roles%20Creation%20Python%20Script) will allow an administrator to create or update airflow RBAC roles in order to add / restrict permissions to a Cloud Composer (Airflow) user.
 
-Ejecución de Python Script
-- Acceso a cloud shell
-- Remoción de rol Op (por default)
-- Creación de los roles y sus permisos asociados y vinculación con DAG
+As part of the parameters this Python script receives, you need too specify:
+- Airflow URL (--airflow-url): the Cloud Composer (Airflow) URL.
+- Role name (--role-name): the name of the role being created.
+- Access Token (--access-token): the access token used to securely connect to the Cloud Composer instance.
+- DAGS (--dags): list of comma separated values with the name of the DAGS you want to apply the specified permissions.
+- Priviligies (--privilegies): specify "read" for read permissions, specify "edit" for edit permissions, specify "delete" for delete permissions, specify "create" for create and specify "menu" for menu permissions.
+
+<u>Note</u>: each GCP user is created in Cloud Composer with the Op Airflow role by default, which in terms of DAGS, gives you the ability to view, create and delete. In order to prevent this role assignment by default, as part of your IAC code you can include initialization scripts to override this behavior.
+
+## RBAC Python script execution
+
+
+
+
 
 GCLOUD Commands para asociación de Rol a Usuario
 
