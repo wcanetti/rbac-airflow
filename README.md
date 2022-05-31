@@ -20,8 +20,8 @@ export IMAGE_VERSION=composer-2.0.14-airflow-2.2.3
 export ENVIRONMENT_SIZE=small
 
 gcloud projects add-iam-policy-binding fresh-sequence-351813 \
-    --member serviceAccount:service-962595729151@cloudcomposer-accounts.iam.gserviceaccount.com \
-    --role roles/composer.ServiceAgentV2Ext
+--member serviceAccount:service-962595729151@cloudcomposer-accounts.iam.gserviceaccount.com \
+--role roles/composer.ServiceAgentV2Ext
 
 gcloud composer environments create env-1 \ 
 --location=${LOCATION} \ 
@@ -32,12 +32,12 @@ gcloud composer environments create env-1 \
 ## POC Scenario Explanation
 
 Two DAGS will be used in this POC:
-- <b><u>DAG A</u></b>: a Bash Airflow Operator that prints a "Hello World! This is DAG-A"
-- <b><u>DAG-B</u></b>: a Bash Airflow Operator that prints a "Hello World! This is DAG-B"
+- <b><u>DAG A</u></b>: a Bash Airflow Operator that prints a "Hello World! This is DAG-A".
+- <b><u>DAG-B</u></b>: a Bash Airflow Operator that prints a "Hello World! This is DAG-B".
 
 We will be creating two <u>roles</u>:
-- <b><u>Consumers-Group-A</u></b>: which can just <b>view</b> DAG-A.
-- <b><u>Consumers-Group-B</u></b>: which can <b>view</b> DAG-B and also <b>execute</b> it.
+- <b><u>Consumers-Group-A</u></b>: which can just <b>view</b> DAG-A (Scenario 1).
+- <b><u>Consumers-Group-B</u></b>: which can <b>view</b> DAG-B and also <b>execute</b> it (Scenario 2). This role will be updated (Scenario 3) to be able to also <b>view</b> (just view) DAG-A.
 
 After having created the two DAGS and ROLES, we will be assigning these ROLES to different users to see the security restrictions applied at the DAG and UI level in action.
 
@@ -45,7 +45,7 @@ After having created the two DAGS and ROLES, we will be assigning these ROLES to
 - The 2 DAGS we will be using are stored in the following [folder](https://github.com/wcanetti/rbac-airflow/tree/main/dags). Open the Cloud Shell and clone the GitHub repo by executing the following command:
 
 ```bash
-https://github.com/wcanetti/rbac-airflow.git
+git clone https://github.com/wcanetti/rbac-airflow.git
 ```
 
 In order to upload the DAGS to the Cloud Composer DAGS folder, please execute the following command. Please first replace the <u>composer-environment-name</u> tag with the Cloud Composer environment name.
