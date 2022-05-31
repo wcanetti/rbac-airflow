@@ -23,9 +23,9 @@ gcloud projects add-iam-policy-binding fresh-sequence-351813 \
 --member serviceAccount:service-962595729151@cloudcomposer-accounts.iam.gserviceaccount.com \
 --role roles/composer.ServiceAgentV2Ext
 
-gcloud composer environments create env-1 \ 
---location=${LOCATION} \ 
---image-version=${IMAGE_VERSION} \ 
+gcloud composer environments create env-1 \
+--location=${LOCATION} \
+--image-version=${IMAGE_VERSION} \
 --environment-size=${ENVIRONMENT_SIZE}
 ```
 
@@ -53,9 +53,9 @@ In order to upload the DAGS to the Cloud Composer DAGS folder, please execute th
 ```bash
 export ENVIRONMENT_NAME=<composer-environment-name>
 gcloud composer environments storage dags import \
-    --environment ${ENVIRONMENT_NAME} \
-    --location ${LOCATION} \
-    --source="/home/${USER}/rbac-airflow/DAGs"
+--environment ${ENVIRONMENT_NAME} \
+--location ${LOCATION} \
+--source="/home/${USER}/rbac-airflow/DAGs"
 ```
 
 The Python script in this [folder](https://github.com/wcanetti/rbac-airflow/tree/main/roles-creation-python-script) will allow an administrator to create or update airflow RBAC roles in order to add / restrict permissions to a Cloud Composer (Airflow) user.
@@ -70,8 +70,9 @@ As part of the parameters this Python script receives, you need too specify:
 <u>Note</u>: each GCP user is created in Cloud Composer with the "Op" Airflow role by default, which in terms of DAGS, gives you the ability to view, create and delete. In order to prevent this role assignment by default, as part of your IAC code you can include initialization scripts to override this behavior. For this POC, we will run the following command to remove the "Op" Airflow role to the users employed. Do not forget to update the \<project id\> and the \<user\> tag.
 
 ```bash
-gcloud composer environments run ${ENVIRONMENT_NAME} \ --location ${LOCATION} \ 
---project ${PROJECT} \ 
+gcloud composer environments run ${ENVIRONMENT_NAME} \
+--location ${LOCATION} \
+--project ${PROJECT} \
 users remove-role -- -e <user> -r Op
 ```
 
