@@ -83,7 +83,9 @@ users remove-role -- -e <user> -r Op
 By executing the command below we will be creating a role called <b>Consumers-Group-A</b> which will provide users having it with <b><u>read</u></b> permissions on the DAGs specified in the DAG list. In this case, DAG-A.
 
 ```bash
-airflow_url=$(echo $(gcloud composer environments describe ${ENVIRONMENT} --location ${LOCATION} --project ${PROJECT} | grep airflowUri | awk '{ print $2}'))
+airflow_url=$(echo $(gcloud composer environments describe ${ENVIRONMENT} \
+--location ${LOCATION} \
+--project ${PROJECT} | grep airflowUri | awk '{ print $2}'))
 role_name="Consumers-Group-A"
 dag_list="DAG-A"
 token=$(echo $(gcloud auth print-access-token))
@@ -110,7 +112,9 @@ The result in Cloud Composer should be the one depicted below, having DAG-A grey
 By executing the command below we will be creating a role called <b>Consumers-Group-B</b> which will provide users having it with <b><u>read and execute</u></b> permissions on the DAGs specified in the DAG list. In this case, DAG-B.
 
 ```bash
-airflow_url=$(echo $(gcloud composer environments describe ${ENVIRONMENT} --location ${LOCATION} --project ${PROJECT} | grep airflowUri | awk '{ print $2}'))
+airflow_url=$(echo $(gcloud composer environments describe ${ENVIRONMENT} \
+--location ${LOCATION} \
+--project ${PROJECT} | grep airflowUri | awk '{ print $2}'))
 role_name="Consumers-Group-B"
 dag_list="DAG-B"
 token=$(echo $(gcloud auth print-access-token))
@@ -137,7 +141,9 @@ The result in Cloud Composer should be the one depicted below, having DAG-B enab
 Now, we will be <u>updating</u> the <b>Consumers-Group-B</b> by running the command again with the changes specified below. We will now specify DAG-A in the DAG list, and we will only provide <b><u>read</u></b> permissions for this specific DAG.
 
 ```bash
-airflow_url=$(echo $(gcloud composer environments describe ${ENVIRONMENT} --location ${LOCATION} --project ${PROJECT} | grep airflowUri | awk '{ print $2}'))
+airflow_url=$(echo $(gcloud composer environments describe ${ENVIRONMENT} \
+--location ${LOCATION} \
+--project ${PROJECT} | grep airflowUri | awk '{ print $2}'))
 role_name="Consumers-Group-B"
 dag_list="DAG-A"
 token=$(echo $(gcloud auth print-access-token))
