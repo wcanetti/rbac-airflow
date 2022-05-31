@@ -91,7 +91,8 @@ dag_list="DAG-A"
 token=$(echo $(gcloud auth print-access-token))
 privileges="read"
 
-python3 /home/${USER}/rbac-airflow/roles-creation-python-script/airflow_rbac_roles.py -u $airflow_url -r $role_name -t $token -d $dag_list -p $privileges
+python3 /home/${USER}/rbac-airflow/roles-creation-python-script/airflow_rbac_roles.py \
+-u $airflow_url -r $role_name -t $token -d $dag_list -p $privileges
 ```
 
 Now, let's assign it to the user. Replace the \<user\> tag with the username you want to bind this role to.
@@ -120,7 +121,8 @@ dag_list="DAG-B"
 token=$(echo $(gcloud auth print-access-token))
 privileges="read edit create delete menu"
 
-python3 /home/${USER}/rbac-airflow/roles-creation-python-script/airflow_rbac_roles.py -u $airflow_url -r $role_name -t $token -d $dag_list -p $privileges
+python3 /home/${USER}/rbac-airflow/roles-creation-python-script/airflow_rbac_roles.py \
+-u $airflow_url -r $role_name -t $token -d $dag_list -p $privileges
 ```
 
 Now, let's assign it to the user. Replace the \<user\> tag with the username you want to bind this role to.
@@ -149,7 +151,8 @@ dag_list="DAG-A"
 token=$(echo $(gcloud auth print-access-token))
 privileges="read"
 
-python3 /home/${USER}/rbac-airflow/roles-creation-python-script/airflow_rbac_roles.py -u $airflow_url -r $role_name -t $token -d $dag_list -p $privileges
+python3 /home/${USER}/rbac-airflow/roles-creation-python-script/airflow_rbac_roles.py \
+-u $airflow_url -r $role_name -t $token -d $dag_list -p $privileges
 ```
 
 The result in Cloud Composer should be the one depicted below, having DAG-A greyed out (only able to read/view), and having DAG-B enabled, being able to read and execute:
